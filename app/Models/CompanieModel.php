@@ -9,4 +9,9 @@ class CompanieModel extends Model
 {
     protected $guarded = [];
     protected $table = 'companies';
+
+    public function employeeModel()
+    {
+        return $this->hasOne(employeeModel::class, 'company');
+    }
 }

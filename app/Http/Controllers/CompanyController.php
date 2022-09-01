@@ -9,11 +9,8 @@ class CompanyController extends Controller
 {
     public function saveCompanyDetails(Request $request)
     {
-        $details = $request->all();
-
         $fileName = $request->file('logo')->getClientOriginalName();
         $path = $request->file('logo')->store('public/logo');
-        // dd($fileName);
 
         CompanieModel::create([
             'name' => $request->name,
@@ -23,5 +20,25 @@ class CompanyController extends Controller
         ]);
 
         return response()->json(['status' => 'success', 'msg' => 'Company details Saved Succesfully']);
+    }
+
+    public function getCompanyOnload()
+    {
+        $data = CompanieModel::select('id', 'name')->get();
+        return response()->json(['status' => 'success', 'data' => $data]);
+    }
+
+    public function getCompanyDataOnload()
+    {
+        $data = CompanieModel::all();
+        return response()->json(['status' => 'success', 'data' => $data]);
+    }
+
+    public function delCompDetails(Request $request)
+    {
+        $id = $request->id;
+
+        CompanieModel::where('id', $id)->delete();
+        return response()->json(['status' => 'success', 'msg' => 'Company details Deleted Succesfully']);
     }
 }

@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class EmployeeModel extends Model
 {
     protected $guarded = [];
+    protected $table = 'employees';
+
+    public function CompanyModel()
+    {
+        return $this->belongsTo(CompanieModel::class, 'id');
+    }
 }

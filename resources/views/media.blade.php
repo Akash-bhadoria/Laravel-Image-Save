@@ -1,4 +1,13 @@
 @include('layout')
+@if (count($errors) > 0)
+<div class="alert alert-danger">
+    <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
 <div class="container mt-3">
 
     <button type="button" class="btn btn-primary" onclick='openCompanyModal()'>
@@ -34,7 +43,7 @@
                 </div>
                 <div class="form-group">
                     <label for="pwd">Company</label>
-                    <select name="eCompany" id="eCompany">
+                    <select class="form-control" name="eCompany" id="eCompany">
 
                     </select>
                 </div>
@@ -51,7 +60,8 @@
 
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Submit</button>
+                <button type="button" class="btn btn-danger" onclick="closeEmployeeDetails()">Close</button>
+                <button type="button" class="btn btn-primary" onclick="saveEmployeeDetails()">Submit</button>
             </div>
 
         </div>
@@ -96,9 +106,46 @@
 
             <!-- Modal footer -->
             <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick="closeCompanyDetails()">Close</button>
                 <button type="button" class="btn btn-primary" onclick="saveCompanyDetails()">Submit</button>
             </div>
 
         </div>
     </div>
+</div>
+<div class="container">
+    <h5 class="mt-4">Company Details</h5>
+    <table class="table table-hover" id="companyTable">
+        <thead>
+            <tr>
+                <th>Company Name</th>
+                <th>Email</th>
+                <th>logo</th>
+                <th>Website</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+</div>
+<hr>
+<div class="container">
+    <h5 class="mt-4">Employee Details</h5>
+    <table class="table table-hover" id="employeeTable">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Company</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
 </div>

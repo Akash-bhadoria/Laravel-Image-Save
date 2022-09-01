@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\EmployeeController;
+use App\Models\CompanieModel;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,3 +27,9 @@ Route::get('/dashboard', function () {
 require __DIR__ . '/auth.php';
 
 Route::post('save-company-details', [CompanyController::class, 'saveCompanyDetails'])->name('save_company_details');
+Route::post('save-employee-details', [EmployeeController::class, 'create'])->name('save_employee_details');
+Route::get('get-company-onload', [CompanyController::class, 'getCompanyOnload'])->name('get_company_onload');
+Route::get('get-company-data-onload', [CompanyController::class, 'getCompanyDataOnload'])->name('get_company_data_onload');
+Route::get('get-employee-data-onload', [EmployeeController::class, 'index'])->name('get_employee_data_onload');
+Route::post('del-emp-details', [EmployeeController::class, 'destroy'])->name('del_emp_details');
+Route::post('del-comp-details', [CompanyController::class, 'delCompDetails'])->name('del_comp_details');

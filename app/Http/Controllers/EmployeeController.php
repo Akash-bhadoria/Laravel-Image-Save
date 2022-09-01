@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EmployeeModel;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -13,7 +14,8 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        //
+        $data = EmployeeModel::select('employees.*', 'companies.name')->leftJoin('companies', 'companies.id', 'employees.company')->get();
+        return response()->json(['status' => 'success', 'data' => $data]);
     }
 
     /**
@@ -21,9 +23,24 @@ class EmployeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $data = $request->all();
+
+        $this->validate($request, [
+            'firstName' => 'required',
+            'lastName' => 'required',
+        ]);
+
+        EmployeeModel::create([
+            'first_name' => $data['firstName'],
+            'last_name' => $data['lastName'],
+            'company' => $data['company'],
+            'email_id' => $data['email'],
+            'phone' => $data['phone'],
+        ]);
+
+        return response()->json(['status' => 'success', 'msg' => 'Employee Details Saved Succesfully']);
     }
 
     /**
@@ -77,8 +94,10 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $id = $request->id;
+        EmployeeModel::where('id', $id)->delete();
+        return response()->json(['status' => 'success', 'msg' => 'Employee details Deleted Succesfully']);
     }
 }
