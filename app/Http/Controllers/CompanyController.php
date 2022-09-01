@@ -10,12 +10,15 @@ class CompanyController extends Controller
     public function saveCompanyDetails(Request $request)
     {
         $details = $request->all();
-        dd($details->file('logo'));
+
+        $fileName = $request->file('logo')->getClientOriginalName();
+        $path = $request->file('logo')->store('public/logo');
+        // dd($fileName);
 
         CompanieModel::create([
             'name' => $request->name,
             'email' => $request->email,
-            'logo' => $request->file('logo'),
+            'logo' => $fileName,
             'website' => $request->link,
         ]);
 
