@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CompanieModel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Models\CompanieModel;
 
 class CompanyController extends Controller
 {
     public function saveCompanyDetails(Request $request)
     {
-        $fileName = $request->file('logo')->getClientOriginalName();
-        $path = $request->file('logo')->store('public/logo');
+        $time = Carbon::now()->format('dmy');
+        $fileName = $time . '_' . $request->file('logo')->getClientOriginalName();
+        $filePath = $request->file('logo')->storeAs('logo', $fileName, 'public');
 
         CompanieModel::create([
             'name' => $request->name,
